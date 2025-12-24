@@ -37,4 +37,6 @@ members = [
 ```sh
 cargo new --vcs=none crates/web-server
 cargo run
+git add .
+git commit -m "Initial Commit"
 ```

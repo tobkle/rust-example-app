@@ -5,11 +5,11 @@ metadata:
   namespace: nails-demo
 spec:
   db:
-    danger_insecure_password: testpassword
+    danger_override_password: testpassword
+    expose_db_port: 30001
   web:
     image: traefik/whoami:v1.11
     port: 80
     expose_app_port: 30000
-    expose_db_port: 30001
   auth:
-    jwt: "1"
+    danger_override_jwt: "1"
