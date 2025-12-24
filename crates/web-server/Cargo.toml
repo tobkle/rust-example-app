@@ -4,3 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+axum = { version = "0.7", default-features = false, features = ["json", "http1", "tokio", "macros"] }
+axum-extra = { version = "0.9", features = ["form", "typed-routing"] }
+clorinde = { version = "0.0.0", path = "../clorinde" }
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", default-features = false, features = ["macros", "rt-multi-thread", "fs"] }
+tokio-util = { version = "0.7", default-features = false, features = ["io"] }
+tower-livereload = "0.9"
