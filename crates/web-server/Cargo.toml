@@ -11,3 +11,8 @@ serde = { version = "1", features = ["derive"] }
 tokio = { version = "1", default-features = false, features = ["macros", "rt-multi-thread", "fs"] }
 tokio-util = { version = "0.7", default-features = false, features = ["io"] }
 tower-livereload = "0.9"
+tower-http = { version = "0.6", features = ["fs"] }
+web-pages = { path = "../web-pages" }
+web-assets = { path = "../web-assets" }
+db = { version = "0.1.0", path = "../db" }
+validator = { version = "0.15", features = ["derive"] }

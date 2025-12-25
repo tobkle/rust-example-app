@@ -1,0 +1,11 @@
+[package]
+name = "web-pages"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clorinde = { version = "0.0.0", path = "../clorinde" }
+serde = { version = "1", features = ["derive"] }
+web-assets = { path = "../web-assets" }
+dioxus = { version = "0.6", features = ["html", "web"] }
+dioxus-ssr = "0.6"
