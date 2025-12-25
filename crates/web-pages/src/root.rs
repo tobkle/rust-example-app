@@ -1,41 +1,86 @@
-use crate::layout::{Layout, render_with_html_wrapper};
+use crate::{layout::{Layout, SideBar}};
 use clorinde::queries::users::User;
 use dioxus::prelude::*;
+use dioxus_ssr::render_element;
+use web_assets::files::favicon_svg;
+use daisy_rsx::*;
 
-#[component]
-fn UserTable(users: Vec<User>) -> Element {
-    rsx! {
-        Layout {
+pub fn index(users: Vec<User>) -> String {
+    let page = rsx! {
+        Layout {    // <-- Use our layout
             title: "Users Table",
-            table {
-                thead {
-                    tr {
-                        th { "ID" }
-                        th { "Email" }
-                    }
+            selected_item: SideBar::Users,
+            BlankSlate {
+                heading: "Welcome To Your Application",
+                visual: favicon_svg.name,
+                description: "This is just the beginning",
+            }
+            Card {
+                class: "card-border mt-12 has-data-table",
+                CardHeader {
+                    class: "p-3 border-b",
+                    title: "Users"
                 }
-                tbody {
-                    for user in users {
-                        tr {
-                            td { "{user.id}" }
-                            td { "{user.email}" }
+                CardBody {
+                    class: "p-0",
+                    table {
+                        class: "table table-sm",
+                        thead {
+                            tr {
+                                th { "ID" }
+                                th { "Email" }
+                            }
+                        }
+                        tbody {
+                            for user in users {
+                                tr {
+                                    td {
+                                        strong {
+                                            "{user.id}"
+                                        }
+                                    }
+                                    td {
+                                        "{user.email}"
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            },
+            }
 
-            form {
-                action: "/new_user",
-                method: "POST",
-                label { r#for: "user_email", "Email:" }
-                input { id: "user_email", name: "email", r#type: "email", required: "true" }
-                button { "Submit" }
-            }            
+            Card {
+                class: "card-border mt-12",
+                CardHeader {
+                    class: "p-3 border-b",
+                    title: "Add User"
+                }
+                CardBody {
+                    class: "p-3",
+                    form {
+                        class: "flex flex-col",
+                        action: "/new_user",
+                        method: "POST",
+
+                        Input {
+                            input_type: InputType::Email,
+                            placeholder: "e.g. ian@test.com",
+                            help_text: "Please enter an email address",
+                            required: true,
+                            label: "Email",
+                            name: "email"
+                        }
+                        Button {
+                            class: "mt-4",
+                            button_type: ButtonType::Submit,
+                            button_scheme: ButtonScheme::Primary,
+                            "Submit"
+                        }
+                    }
+                }
+            }
         }
-    }
-}
+    };
 
-pub fn index(users: Vec<User>) -> String {
-    let body_content = dioxus_ssr::render_element(rsx! { UserTable { users } });
-    render_with_html_wrapper("Users Table", &body_content)
+    render_element(page)
 }

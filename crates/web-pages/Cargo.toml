@@ -9,3 +9,4 @@ serde = { version = "1", features = ["derive"] }
 web-assets = { path = "../web-assets" }
 dioxus = { version = "0.6", features = ["html", "web"] }
 dioxus-ssr = "0.6"
+daisy_rsx = "0.1"

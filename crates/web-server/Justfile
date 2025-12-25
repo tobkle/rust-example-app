@@ -1,2 +1,9 @@
+
 watch:
-    cargo watch --workdir /workspace/ -w crates/web-server -w crates/db -w crates/web-pages --no-gitignore -x "run --bin web-server"
+    cargo watch --workdir /workspace/ \
+      -w crates/web-server \
+      -w crates/web-pages \
+      -w crates/clorinde \
+      -w crates/web-assets/dist \
+      --no-gitignore \
+      -x "run --bin web-server"

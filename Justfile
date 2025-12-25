@@ -15,3 +15,16 @@ get-config:
     sed -i '/certificate-authority-data/d' "$HOME/.kube/config"
     sed -i '/cluster:/a \ \ \ \ insecure-skip-tls-verify: true' "$HOME/.kube/config"
     echo "✅ kubeconfig updated and TLS verification disabled"
+
+tailwind:
+    mkdir -p /workspace/crates/web-assets/dist
+    cd /workspace/crates/web-assets && npx tailwindcss --config ./tailwind.config.ts -i ./input.css -o ./dist/tailwind.css --watch
+
+islands:
+    cargo watch \
+      -w crates/web-csr \
+      -s 'cargo build -p web-csr --target wasm32-unknown-unknown --release && \
+          wasm-bindgen \
+            target/wasm32-unknown-unknown/release/web_csr.wasm \
+            --target web \
+            --out-dir crates/web-assets/dist'

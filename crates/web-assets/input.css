@@ -1,18 +1,37 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+@plugin "daisyui";
+@plugin "@tailwindcss/typography";
 
-/* Turn cross-document view-transitions on */
-/* Note that this at-rule is all that is needed to create the default cross-fade animation  */
-/* Chrome only */
+@source '../web-pages/**/*.rs';
+@source inline("modal modal-box modal-action");
+@source inline("breadcrumbs");
+@source inline("badge badge-neutral badge-primary badge-outline badge-secondary badge-accent badge-info badge-success badge-warning badge-error");
+@source inline("badge-md badge-sm");
+@source inline("btn btn-primary btn-secondary btn-accent btn-info btn-success btn-warning btn-error btn-outline btn-dash btn-soft btn-ghost btn-link btn-active btn-disabled btn-xs btn-sm btn-md btn-lg btn-xl btn-wide btn-block btn-square btn-circle");
+@source inline("tab tabs tab-content tabs-border");
+@source inline("tooltip tooltip-info");
+@source inline("input input-border");
+@source inline("select select-border");
+@source inline("file-input");
+@source inline("dropdown dropdown-top dropdown-left");
+@source inline("fieldset fieldset-legend label");
+@source inline("menu menu-title");
+@source inline("card card-bordered card-header card-title card-body");
 
-@view-transition {
-  navigation: auto;
-}
-
-/* Customize the default animation behavior */
-
-::view-transition-group(root) {
-  animation-duration: 0.5s;
+/** 
+    An example of changing the style of an exiting component.
+**/
+@layer components {
+    .card {
+        background-color: var(--color-base-100);
+        border: 1px solid var(--color-base-300);
+        > .card-header {
+            border-bottom: 1px solid var(--color-base-300);
+            padding: calc(var(--spacing) * 4);
+        }
+        > .card-body {
+            padding: calc(var(--spacing) * 4);
+        }
+    }
 }
