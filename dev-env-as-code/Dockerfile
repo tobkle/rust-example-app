@@ -70,6 +70,8 @@ ARG DOCKER_COMPOSE_VERSION=2.23.0
 ARG POSTGRES_CLIENT_VERSION=16
 ARG K9S_VERSION=v0.50.16
 ARG STACK_VERSION=v1.1.0
+ARG NODE_MAJOR=22
+ARG RAINFROG_VERSION=0.3.12
 
 
 # This Dockerfile adds a non-root 'vscode' user with sudo access. However, for Linux,
@@ -101,8 +103,6 @@ RUN apt-get update && \
         musl \
         musl-dev \
         musl-tools \
-        nodejs \
-        npm \
         protobuf-compiler \
         software-properties-common \
         ssh \
@@ -113,7 +113,20 @@ RUN apt-get update && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /var/cache/* \
 
-    # Docker Engine for Earthly. https://docs.docker.com/engine/install/debian/
+    # Node.js (LTS) via NodeSource (instead of Debian's Node 18.x)
+    && install -m 0755 -d /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && chmod a+r /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x nodistro main" \
+        > /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nodejs \
+    && npm install -g yarn \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+
+        # Docker Engine for Earthly. https://docs.docker.com/engine/install/debian/
     && install -m 0755 -d /etc/apt/keyrings \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
     && chmod a+r /etc/apt/keyrings/docker.gpg \
@@ -123,23 +136,27 @@ RUN apt-get update && \
         "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
         tee /etc/apt/sources.list.d/docker.list > /dev/null \
     && apt-get -y update \
-    && apt-get -y --no-install-recommends install docker-ce docker-ce-cli containerd.io \
+    && apt-get -y --no-install-recommends install \
+        docker-ce \
+        docker-ce-cli \
+        containerd.io \
+        docker-buildx-plugin \
+        docker-compose-plugin \
     && apt-get autoremove -y && apt-get clean -y \
 
-    # Tailwind binary + extra
-    && curl -OL https://github.com/dobicinaitis/tailwind-cli-extra/releases/latest/download/tailwindcss-extra-linux-x64 \
-    && chmod +x tailwindcss-extra-linux-x64 \
-    && mv tailwindcss-extra-linux-x64 /usr/local/bin/tailwind-extra \
-        
-    # Rainfrog (latest)
-    && curl -s https://api.github.com/repos/achristmascarl/rainfrog/releases/latest \
-      | grep "browser_download_url.*x86_64-unknown-linux-musl.tar.gz" \
-      | cut -d '"' -f 4 \
-      | xargs -n1 -P1 curl -OL \
-    && tar -xzf rainfrog-*-x86_64-unknown-linux-musl.tar.gz \
+    # Rainfrog (pinned)
+    && case "${TARGETARCH}" in \
+        amd64) RF_TARGET="x86_64-unknown-linux-musl" ;; \
+        arm64) RF_TARGET="aarch64-unknown-linux-musl" ;; \
+        *) echo "Unsupported architecture for rainfrog: ${TARGETARCH}" && exit 1 ;; \
+    esac \
+    && curl -fsSL \
+        -o /tmp/rainfrog.tar.gz \
+        "https://github.com/achristmascarl/rainfrog/releases/download/v${RAINFROG_VERSION}/rainfrog-v${RAINFROG_VERSION}-${RF_TARGET}.tar.gz" \
+    && tar -xzf /tmp/rainfrog.tar.gz \
     && chmod +x rainfrog \
     && mv rainfrog /usr/local/bin/rainfrog \
-    && rm rainfrog-*-x86_64-unknown-linux-musl.tar.gz \
+    && rm -f /tmp/rainfrog.tar.gz \
 
     # Create a non-root user
     && groupadd --gid $USER_GID $USERNAME \
@@ -157,12 +174,19 @@ RUN apt-get update && \
     && mv ./dbmate-linux-${TARGETARCH} /usr/bin/dbmate \
     && chmod +x /usr/bin/dbmate \
     # Mold - Fast Rust Linker
-    && curl -OL https://github.com/rui314/mold/releases/download/v$MOLD_VERSION/mold-$MOLD_VERSION-x86_64-linux.tar.gz \
-    && tar -xf mold-$MOLD_VERSION-x86_64-linux.tar.gz \
-    && mv ./mold-$MOLD_VERSION-x86_64-linux/bin/mold /usr/bin/ \
-    && mv ./mold-$MOLD_VERSION-x86_64-linux/lib/mold/mold-wrapper.so /usr/bin/ \
-    && rm mold-$MOLD_VERSION-x86_64-linux.tar.gz \
-    && rm -rf ./mold-$MOLD_VERSION-x86_64-linux \
+    && case "${TARGETARCH}" in \
+        amd64) MOLD_ARCH="x86_64-linux" ;; \
+        arm64) MOLD_ARCH="aarch64-linux" ;; \
+        *) echo "Unsupported architecture for mold: ${TARGETARCH}" && exit 1 ;; \
+    esac \
+    && curl -fsSL \
+        -o /tmp/mold.tar.gz \
+        "https://github.com/rui314/mold/releases/download/v$MOLD_VERSION/mold-$MOLD_VERSION-${MOLD_ARCH}.tar.gz" \
+    && tar -xf /tmp/mold.tar.gz \
+    && mv ./mold-$MOLD_VERSION-${MOLD_ARCH}/bin/mold /usr/bin/ \
+    && mv ./mold-$MOLD_VERSION-${MOLD_ARCH}/lib/mold/mold-wrapper.so /usr/bin/ \
+    && rm -f /tmp/mold.tar.gz \
+    && rm -rf ./mold-$MOLD_VERSION-${MOLD_ARCH} \
     && chmod +x /usr/bin/mold
 
 RUN wget https://github.com/earthly/earthly/releases/download/v$EARTHLY_VERSION/earthly-linux-${TARGETARCH} -O /usr/local/bin/earthly \
