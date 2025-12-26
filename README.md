@@ -12,4 +12,12 @@ Built with the [Rust on Nails](https://rust-on-nails.com/) architecture for secu
 Notes:
 - The canonical gRPC method path is `/api.Users/GetUsers`.
 - If you run behind an ingress that routes by `/api` prefix, the server also accepts `/api/api.Users/GetUsers`.
+
+## Asset pipeline (web-components)
+
+- Build the JS/CSS bundle: `just asset-pipeline`
+- The Rust build publishes it automatically into `crates/web-assets/dist/asset-pipeline/`
+- The server serves it under `/dist/asset-pipeline/index.js`
+
+Usage example (Dioxus/RSX): render the custom element anywhere, e.g. `hello-world {}`.
 - If you run behind an ingress that routes by `/api` prefix, the server also accepts `/api/api.Users/GetUsers`.

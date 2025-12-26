@@ -227,7 +227,8 @@ pub fn BaseLayout(props: BaseLayoutProps) -> Element {
                                 }
                             }
                         }
-                        {props.header}
+                        {props.header},
+                        "hello-world" {}
                     }
                     section {
                         class: "flex-1 overflow-y-auto",

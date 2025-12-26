@@ -28,3 +28,9 @@ islands:
             target/wasm32-unknown-unknown/release/web_csr.wasm \
             --target web \
             --out-dir crates/web-assets/dist'
+
+asset-pipeline:
+    cd /workspace/crates/asset-pipeline && npm run release
+
+asset-pipeline-watch:
+    cd /workspace/crates/asset-pipeline && npm run start

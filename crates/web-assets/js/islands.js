@@ -1,3 +1,4 @@
+import "../dist/asset-pipeline/index.js";
 import init, { hydrate } from "../dist/web_csr.js";
 
 async function main() {
