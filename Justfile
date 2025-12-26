@@ -34,3 +34,32 @@ asset-pipeline:
 
 asset-pipeline-watch:
     cd /workspace/crates/asset-pipeline && npm run start
+
+run-docker-build:
+    cd dev-env-as-code &&  \
+    docker build --build-arg TARGETARCH=arm64 --build-arg BUILDPLATFORM=linux/arm64 -t tobkle/toby-dev-env:latest -f Dockerfile .  && \
+    docker push tobkle/toby-dev-env:latest  &&\
+    cd ..
+
+run-earthly:
+    printf '%s\n' 'IMAGE_PREFIX=ghcr.io/tobkle' 'RUST_TARGET=aarch64-unknown-linux-musl' 'DBMATE_ARCH=arm64' > /tmp/earthly.arg
+    cd /workspace && earthly -P --disable-remote-registry-proxy --arg-file-path /tmp/earthly.arg +build-cache
+    cd /workspace && earthly -P --disable-remote-registry-proxy --arg-file-path /tmp/earthly.arg +migration-container
+    cd /workspace && earthly -P --disable-remote-registry-proxy --arg-file-path /tmp/earthly.arg +app-container
+
+run-earthly-push:
+    printf '%s\n' 'IMAGE_PREFIX=ghcr.io/tobkle' 'RUST_TARGET=aarch64-unknown-linux-musl' 'DBMATE_ARCH=arm64' > /tmp/earthly.arg
+    cd /workspace && earthly -P --push --disable-remote-registry-proxy --arg-file-path /tmp/earthly.arg +migration-container
+    cd /workspace && earthly -P --push --disable-remote-registry-proxy --arg-file-path /tmp/earthly.arg +app-container
+
+# Log in to GitHub Container Registry (GHCR).
+# Usage: GHCR_TOKEN=... just ghcr-login
+ghcr-login:
+    test -n "$GHCR_TOKEN"
+    echo "$GHCR_TOKEN" | docker login ghcr.io -u tobkle --password-stdin
+
+# Verify that the images exist on GHCR by fetching their manifests.
+ghcr-check:
+    docker manifest inspect ghcr.io/tobkle/app:latest >/dev/null && \
+    docker manifest inspect ghcr.io/tobkle/app-migrations:latest >/dev/null && \
+    echo "OK: ghcr.io/tobkle/app:latest and ghcr.io/tobkle/app-migrations:latest exist"
