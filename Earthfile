@@ -84,6 +84,13 @@ build:
     COPY +build-cache/cargo_home $CARGO_HOME
     COPY +build-cache/target target
     COPY --dir +npm-build/dist $PIPELINE_FOLDER/
+
+    # Build Tailwind CSS so `web_assets::files::tailwind_css` exists at compile time.
+    RUN cd crates/web-assets \
+        && npm ci \
+        && mkdir -p dist \
+        && npx tailwindcss --config ./tailwind.config.js -i ./input.css -o ./dist/tailwind.css
+
     # We need to run inside docker as we need postgres running for cornucopia
     ARG DATABASE_URL=postgresql://postgres:testpassword@localhost:5432/postgres?sslmode=disable
     USER root
