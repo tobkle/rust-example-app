@@ -20,7 +20,10 @@ jobs:
     - uses: earthly/actions/setup-earthly@v1
       with:
         version: v0.8.15
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
     - name: Put back the git branch into git (Earthly uses it for tagging)
       run: |
@@ -39,16 +42,27 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Build dev env image (amd64)
+      run: |
+        docker buildx build \
+          --platform linux/amd64 \
+          -f dev-env-as-code/Dockerfile \
+          -t ghcr.io/${{ github.repository_owner }}/toby-dev-env:latest \
+          --push \
+          dev-env-as-code
+
     - name: Earthly version
       run: earthly --version
 
     - name: Run build
       # Allow privelaged is required to run docker in docker
-      run: earthly --allow-privileged +all
-
-    - name: Tag and Push Images
       run: |
-        docker tag tobkle/app ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
-        docker tag tobkle/app-migrations ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-migrations
-        docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
-        docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-migrations:latest
+        cat > /tmp/earthly.arg <<'EOF'
+        DEV_ENV_IMAGE=ghcr.io/${{ github.repository_owner }}/toby-dev-env:latest
+        IMAGE_PREFIX=ghcr.io/${{ github.repository_owner }}
+        APP_NAME=${{ github.event.repository.name }}
+        SOURCE_REPO_URL=https://github.com/${{ github.repository }}
+        RUST_TARGET=x86_64-unknown-linux-musl
+        DBMATE_ARCH=amd64
+        EOF
+        earthly --allow-privileged --push --arg-file-path /tmp/earthly.arg +all
