@@ -1,0 +1,14 @@
+services:
+
+  # Postgres
+  db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_USER: dbowner
+      POSTGRES_DATABASE: stack-app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

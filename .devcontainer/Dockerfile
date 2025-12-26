@@ -1,4 +1,5 @@
-FROM purtontech/rust-on-nails-devcontainer:1.3.36 AS development
+# FROM purtontech/rust-on-nails-devcontainer:1.3.36 AS development
+FROM ghcr.io/tobkle/toby-dev-env:latest AS development
 
 COPY ps1.bash .
 RUN cat ps1.bash >> ~/.bashrc && sudo rm ps1.bash

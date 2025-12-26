@@ -1,20 +1,27 @@
 {
   "name": "Rust on Nails",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": "."
-  },
+  // "build": {
+  //   "dockerfile": "Dockerfile",
+  //   "context": "."
+  // },
 
-  "runArgs": [
-    "--add-host=host.docker.internal:host-gateway"
-  ],
+	"dockerComposeFile": [
+		"docker-compose.yml",
+		"docker-compose.postgres.yml"
+	],
+	"service": "app",
+
+
+  // "runArgs": [
+  //   "--add-host=host.docker.internal:host-gateway"
+  // ],
 
   "features": {
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
 
   // Mount the project at /workspace like before
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  // "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
 
   // Gives access to the ssh keys on the host for git operations.
