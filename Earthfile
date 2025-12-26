@@ -13,10 +13,11 @@ ARG IMAGE_PREFIX=ghcr.io/tobkle
 ARG APP_EXE_NAME=web-server
 
 # Build target (override via `.arg` or `--arg-file-path`, e.g. `RUST_TARGET=aarch64-unknown-linux-musl`)
-ARG RUST_TARGET=x86_64-unknown-linux-musl
+# ARG RUST_TARGET=x86_64-unknown-linux-musl
+ARG RUST_TARGET=aarch64-unknown-linux-musl
 
 # dbmate release arch string (override via `.arg` or `--arg-file-path`, e.g. `DBMATE_ARCH=arm64`)
-ARG DBMATE_ARCH=amd64
+ARG DBMATE_ARCH=arm64
 
 # Version of software
 ARG DBMATE_VERSION=2.28.0
