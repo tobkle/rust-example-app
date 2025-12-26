@@ -61,6 +61,7 @@ npm-build:
     COPY --if-exists $GRPC_API_FOLDER $GRPC_API_FOLDER
     COPY +npm-deps/node_modules $PIPELINE_FOLDER/node_modules
     RUN cd $PIPELINE_FOLDER && npm run release
+    RUN mkdir -p $PIPELINE_FOLDER/images
     SAVE ARTIFACT $PIPELINE_FOLDER/dist
     SAVE ARTIFACT $PIPELINE_FOLDER/images
 
