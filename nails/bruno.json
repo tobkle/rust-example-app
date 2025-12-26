@@ -1,0 +1,25 @@
+{
+  "version": "1",
+  "name": "nails",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ],
+  "size": 0,
+  "filesCount": 0,
+  "protobuf": {
+    "protoFiles": [
+      {
+        "path": "../crates/grpc-api/protos/api.proto",
+        "type": "file"
+      }
+    ],
+    "importPaths": [
+      {
+        "path": "../crates/grpc-api/protos",
+        "enabled": true
+      }
+    ]
+  }
+}

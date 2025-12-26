@@ -1,0 +1,20 @@
+meta {
+  name: gRPC-UserService
+  type: grpc
+  seq: 1
+}
+
+grpc {
+  url: http://localhost:3000
+  method: /api.Users/GetUsers
+  body: grpc
+  auth: inherit
+  methodType: unary
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {}
+  '''
+}

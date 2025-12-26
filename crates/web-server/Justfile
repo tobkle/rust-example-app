@@ -4,6 +4,5 @@ watch:
       -w crates/web-server \
       -w crates/web-pages \
       -w crates/clorinde \
-      -w crates/web-assets/dist \
       --no-gitignore \
       -x "run --bin web-server"

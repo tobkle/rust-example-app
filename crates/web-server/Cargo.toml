@@ -4,15 +4,18 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-axum = { version = "0.7", default-features = false, features = ["json", "http1", "tokio", "macros"] }
-axum-extra = { version = "0.9", features = ["form", "typed-routing"] }
+axum = { version = "0.8", default-features = false, features = ["json", "http1", "http2", "tokio", "macros"] }
+axum-extra = { version = "0.10", features = ["form", "typed-routing"] }
 clorinde = { version = "0.0.0", path = "../clorinde" }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1", default-features = false, features = ["macros", "rt-multi-thread", "fs"] }
 tokio-util = { version = "0.7", default-features = false, features = ["io"] }
+tonic = { version = "0.14.2", features = ["transport"] }
+tonic-reflection = "0.14.2"
 tower-livereload = "0.9"
 tower-http = { version = "0.6", features = ["fs"] }
 web-pages = { path = "../web-pages" }
 web-assets = { path = "../web-assets" }
 db = { version = "0.1.0", path = "../db" }
+grpc-api = { version = "0.1.0", path = "../grpc-api" }
 validator = { version = "0.15", features = ["derive"] }

@@ -1,18 +1,11 @@
 use axum::body::Body;
+use axum::extract::Path;
 use axum::http::{header, HeaderValue, Response, StatusCode};
 use axum::response::IntoResponse;
-use axum_extra::routing::TypedPath;
-use serde::Deserialize;
 use tokio_util::io::ReaderStream;
 use web_assets::files::StaticFile;
 
-#[derive(TypedPath, Deserialize)]
-#[typed_path("/static/*path")]
-pub struct StaticFilePath {
-    pub path: String,
-}
-
-pub async fn static_path(StaticFilePath { path }: StaticFilePath) -> impl IntoResponse {
+pub async fn static_path(Path(path): Path<String>) -> impl IntoResponse {
     
     let path = format!("/static/{}", path);
 
