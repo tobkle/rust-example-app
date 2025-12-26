@@ -10,3 +10,5 @@ cargo build
 
 earthly -P --build-arg RUST_TARGET=aarch64-unknown-linux-musl --build-arg DBMATE_ARCH=arm64 +build-cache
 ```
+
+openssl rand -hex 32

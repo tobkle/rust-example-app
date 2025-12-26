@@ -1,0 +1,21 @@
+# This confuration file is for https://www.replibyte.com/ a tool for to tool to 
+# seed your databases with your production data while keeping sensitive data safe.
+# replibyte -c crates/db/backup-conf.yaml source schema 
+# optional - encrypt data on datastore
+encryption_key: $PRIVATE_ENC_KEY 
+source:
+  # A connection to your prod DB. Make it readonly.
+  connection_uri: $SOURCE_DATABASE_URL
+datastore:
+  # It says AWS but you can use any S3 compatible service by setting the endpoint
+  aws:
+    bucket: $S3_BUCKET
+    region: $S3_REGION
+    credentials:
+      access_key_id: $ACCESS_KEY_ID
+      secret_access_key: $SECRET_ACCESS_KEY
+#    endpoint:
+#      custom: $S3_LIKE_URL
+# If you want to populate a dev database 
+#destination:
+#  connection_uri: $DEST_DATABASE_URL
