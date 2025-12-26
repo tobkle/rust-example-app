@@ -3,6 +3,7 @@ dev-init:
     k3d cluster create k3d-nails --agents 1 -p "30000-30001:30000-30001@agent:0"
     just get-config
 
+# wait 10 seconds for the cluster to be ready, before starting dev-setup
 dev-setup:
     stack init
     stack install --manifest stack.dev.yaml

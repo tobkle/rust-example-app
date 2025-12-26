@@ -8,6 +8,8 @@ use axum_extra::extract::Form;
 use clorinde::{deadpool_postgres::Pool};
 use serde::Deserialize;
 use validator::Validate;
+use crate::config::Config;
+use crate::email::send_email;
 
 pub async fn loader(Extension(pool): Extension<Pool>) -> Result<Html<String>, CustomError> {
     let client = pool.get().await?;
@@ -41,6 +43,16 @@ pub async fn new_user_action(
     let _ = clorinde::queries::users::create_user()
         .bind(&client, &email.as_str())
         .await?;
+
+    let email_message = lettre::Message::builder()
+        .from("no-reply@example.com".parse().unwrap())
+        .to(email.parse().unwrap())
+        .subject("Welcome!")
+        .body("Thank you for signing up!".to_string())
+        .unwrap();
+
+    let config = Config::new();
+    send_email(&config, email_message);
 
     // 303 redirect to users list
     Ok(Redirect::to("/").into_response())

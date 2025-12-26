@@ -3,6 +3,7 @@ mod errors;
 mod api_service;
 mod root;
 mod static_files;
+mod email;
 
 use std::net::SocketAddr;
 

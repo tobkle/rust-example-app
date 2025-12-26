@@ -42,7 +42,8 @@
         "mutantdino.resourcemonitor",
         "matklad.rust-analyzer",
         "tamasfe.even-better-toml",
-        "fill-labs.dependi"
+        "fill-labs.dependi",
+        "skellock.just"
       ]
     }
   },

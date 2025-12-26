@@ -1,3 +1,9 @@
+##
+if you get:
+status = 422 Unprocessable Entity, message = db error
+
+The ```dbmate up``` hasn't run yet.
+
 ## Rust on Nails
 
 Built with the [Rust on Nails](https://rust-on-nails.com/) architecture for secure full stack web applications.

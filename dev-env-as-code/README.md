@@ -1,5 +1,12 @@
 ## Build
 
+multi-platform build:
+
+```sh
+docker buildx create --use
+docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/tobkle/toby-dev-env:latest --push .
+```
+
 ```sh
 cd /workspace/dev-env-as-code
 
