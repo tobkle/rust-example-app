@@ -47,6 +47,15 @@ async fn main() {
         .build_v1alpha()
         .expect("Failed to build gRPC reflection service (v1alpha)");
 
+    // let grpc_service = tonic::transport::Server::builder()
+    //     .accept_http1(true)
+    //     .add_service(tonic_web::enable(crate::api::fortunes_server::FortunesServer::new(
+    //         api_service::FortunesService { pool },
+    //     )))
+    //     .into_service();
+
+    // let hybrid_make_service = hybrid::hybrid(axum_make_service, grpc_service);       
+
     let grpc_router = Routes::new(UsersServer::new(api_service::UsersService {
         pool: pool.clone(),
     }))

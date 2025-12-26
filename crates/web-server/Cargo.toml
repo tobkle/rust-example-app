@@ -19,3 +19,5 @@ web-assets = { path = "../web-assets" }
 db = { version = "0.1.0", path = "../db" }
 grpc-api = { version = "0.1.0", path = "../grpc-api" }
 validator = { version = "0.15", features = ["derive"] }
+
+tonic-web = "0"
