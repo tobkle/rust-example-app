@@ -14,6 +14,16 @@ services:
         - "1025:1025"
         - "8025:8025"
 
+  barricade:
+      image: purtontech/barricade:1.2.5
+      env_file:
+          - .env
+      depends_on:
+        db:
+          condition: service_healthy
+      ports:
+        - "9090:9090"
+
   app:
     build:
       context: .

@@ -10,12 +10,16 @@ use serde::Deserialize;
 use validator::Validate;
 use crate::config::Config;
 use crate::email::send_email;
+use crate::authentication;
 
-pub async fn loader(Extension(pool): Extension<Pool>) -> Result<Html<String>, CustomError> {
+pub async fn loader(
+    Extension(pool): Extension<Pool>,
+    current_user: authentication::Authentication,
+) -> Result<Html<String>, CustomError> {
     let client = pool.get().await?;
 
     let users = clorinde::queries::users::get_users().bind(&client).all().await?;
-
+    dbg!(current_user.user_id);
     let html = web_pages::root::index(users);
 
     Ok(Html(html))

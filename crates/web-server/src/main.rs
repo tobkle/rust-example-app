@@ -4,6 +4,7 @@ mod api_service;
 mod root;
 mod static_files;
 mod email;
+mod authentication;
 
 use std::net::SocketAddr;
 
