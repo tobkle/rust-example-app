@@ -5,8 +5,8 @@
 VERSION 0.6
 
 # We use our devcontainer as it has all the tools we need.
-# In CI this must match the runner architecture (usually linux/amd64).
-ARG DEV_ENV_IMAGE=ghcr.io/tobkle/toby-dev-env:latest
+# In CI this must match the runner architecture (usually linux/amd64) via arg-file override.
+ARG DEV_ENV_IMAGE=tobkle/toby-dev-env:latest
 FROM $DEV_ENV_IMAGE
 
 ARG APP_NAME=app
@@ -62,6 +62,7 @@ npm-build:
     COPY +npm-deps/node_modules $PIPELINE_FOLDER/node_modules
     RUN cd $PIPELINE_FOLDER && npm run release
     SAVE ARTIFACT $PIPELINE_FOLDER/dist
+    SAVE ARTIFACT $PIPELINE_FOLDER/images
 
 prepare-cache:
     # Copy in all our crates
@@ -126,7 +127,7 @@ app-container:
     COPY +build/$APP_EXE_NAME web-server
     # Place assets in a build folder as that's where statics is expecting them.
     COPY --dir +npm-build/dist /build/$PIPELINE_FOLDER/
-    COPY --dir $PIPELINE_FOLDER/images /build/$PIPELINE_FOLDER/images
+    COPY --dir +npm-build/images /build/$PIPELINE_FOLDER/images
     ENTRYPOINT ["./web-server"]
     SAVE IMAGE $APP_IMAGE_NAME
     SAVE IMAGE --push $APP_IMAGE_NAME

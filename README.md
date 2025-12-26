@@ -20,4 +20,7 @@ Notes:
 - The server serves it under `/dist/asset-pipeline/index.js`
 
 Usage example (Dioxus/RSX): render the custom element anywhere, e.g. `hello-world {}`.
-- If you run behind an ingress that routes by `/api` prefix, the server also accepts `/api/api.Users/GetUsers`.
+
+## Dev env image
+
+See [dev-env-as-code/README.md](dev-env-as-code/README.md) for how to build the dev environment image locally for both `amd64` and `arm64` (tags `:amd64` / `:arm64`) and how to point Earthly to the right one via `DEV_ENV_IMAGE`.
