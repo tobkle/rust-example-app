@@ -1,0 +1,165 @@
+[32m _          _                            _    _____     [0m
+[32m| |__   ___| |_ _____ __   ___ _ __     | | _|___ / ___ [0m
+[32m| '_ \ / _ \ __|_  / '_ \ / _ \ '__|____| |/ / |_ \/ __|[0m
+[32m| | | |  __/ |_ / /| | | |  __/ | |_____|   < ___) \__ \[0m
+[32m|_| |_|\___|\__/___|_| |_|\___|_|       |_|\_\____/|___/[0m
+
+[34mVersion: 2.4.4[0m
+
+[Configuration] Validating configuration...
+[Configuration] ...configuration seems valid.
+[Private Network] Creating private network...
+[Private Network] ...private network created
+[Instance rust-example-cluster-master1] Creating instance rust-example-cluster-master1 (attempt 1)...
+[Instance rust-example-cluster-master2] Creating instance rust-example-cluster-master2 (attempt 1)...
+[Instance rust-example-cluster-master3] Creating instance rust-example-cluster-master3 (attempt 1)...
+[Instance rust-example-cluster-master1] Instance status: initializing
+[Instance rust-example-cluster-master1] Powering on instance (attempt 1)
+[Instance rust-example-cluster-master1] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master3] Instance status: initializing
+[Instance rust-example-cluster-master3] Powering on instance (attempt 1)
+[Instance rust-example-cluster-master3] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master2] Instance status: initializing
+[Instance rust-example-cluster-master2] Powering on instance (attempt 1)
+[Instance rust-example-cluster-master2] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master1] Instance status: starting
+[Instance rust-example-cluster-master1] Powering on instance (attempt 2)
+[Instance rust-example-cluster-master1] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master3] Instance status: initializing
+[Instance rust-example-cluster-master3] Powering on instance (attempt 2)
+[Instance rust-example-cluster-master3] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master2] Instance status: initializing
+[Instance rust-example-cluster-master2] Powering on instance (attempt 2)
+[Instance rust-example-cluster-master2] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master1] Instance status: starting
+[Instance rust-example-cluster-master1] Powering on instance (attempt 3)
+[Instance rust-example-cluster-master1] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master3] Instance status: running
+[Instance rust-example-cluster-master2] Instance status: starting
+[Instance rust-example-cluster-master2] Powering on instance (attempt 3)
+[Instance rust-example-cluster-master2] Waiting for instance to be powered on...
+[Instance rust-example-cluster-master1] Instance status: running
+[Instance rust-example-cluster-master2] Instance status: running
+[Instance rust-example-cluster-master3] ...instance rust-example-cluster-master3 created
+[Instance rust-example-cluster-master1] ...instance rust-example-cluster-master1 created
+[Instance rust-example-cluster-master2] ...instance rust-example-cluster-master2 created
+[Firewall] Creating firewall...
+[Firewall] ...firewall created
+[Instance rust-example-cluster-master3] 🕒 Awaiting cloud config (may take a minute...)
+[Instance rust-example-cluster-master3] Cloud init finished: 36.14 - Sat, 27 Dec 2025 15:51:40 +0000 - v. 25.2-0ubuntu1~24.04.1
+[Instance rust-example-cluster-master3] Private network interface enp7s0 found
+[Instance rust-example-cluster-master3] Private network IP: 10.0.0.3
+[Instance rust-example-cluster-master3] Installing k3s...
+[Instance rust-example-cluster-master3] [INFO]  Using v1.32.0+k3s1 as release
+[Instance rust-example-cluster-master3] [INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.32.0+k3s1/sha256sum-amd64.txt
+[Instance rust-example-cluster-master3] [INFO]  Downloading binary https://github.com/k3s-io/k3s/releases/download/v1.32.0+k3s1/k3s
+[Instance rust-example-cluster-master3] [INFO]  Verifying binary download
+[Instance rust-example-cluster-master3] [INFO]  Installing k3s to /usr/local/bin/k3s
+[Instance rust-example-cluster-master3] [INFO]  Skipping installation of SELinux RPM
+[Instance rust-example-cluster-master3] [INFO]  Creating /usr/local/bin/kubectl symlink to k3s
+[Instance rust-example-cluster-master3] [INFO]  Creating /usr/local/bin/crictl symlink to k3s
+[Instance rust-example-cluster-master3] [INFO]  Creating /usr/local/bin/ctr symlink to k3s
+[Instance rust-example-cluster-master3] [INFO]  Creating killall script /usr/local/bin/k3s-killall.sh
+[Instance rust-example-cluster-master3] [INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh
+[Instance rust-example-cluster-master3] [INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env
+[Instance rust-example-cluster-master3] [INFO]  systemd: Creating service file /etc/systemd/system/k3s.service
+[Instance rust-example-cluster-master3] [INFO]  systemd: Enabling k3s unit
+[Instance rust-example-cluster-master3] Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc/systemd/system/k3s.service.
+[Instance rust-example-cluster-master3] [INFO]  systemd: Starting k3s
+[Instance rust-example-cluster-master3] k3s installation completed successfully
+[Instance rust-example-cluster-master3] Waiting for the control plane to be ready...
+[Control plane] Generating the kubeconfig file to /Users/toby/code/rust/rust-nails2/infra-as-code/kubeconfig...
+[Control plane] Switched to context "rust-example-cluster-master3".
+[Control plane] ...kubeconfig file generated as /Users/toby/code/rust/rust-nails2/infra-as-code/kubeconfig.
+[Instance rust-example-cluster-master3] Validating first master setup...
+[First Master Validation] ✅ First master validation successful
+[Instance rust-example-cluster-master1] Cloud init already finished: 54.47 - Sat, 27 Dec 2025 15:52:04 +0000 - v. 25.2-0ubuntu1~24.04.1
+[Instance rust-example-cluster-master1] Private network interface enp7s0 found
+[Instance rust-example-cluster-master1] Private network IP: 10.0.0.2
+[Instance rust-example-cluster-master1] Installing k3s...
+[Instance rust-example-cluster-master1] [INFO]  Using v1.32.0+k3s1 as release
+[Instance rust-example-cluster-master1] [INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.32.0+k3s1/sha256sum-amd64.txt
+[Instance rust-example-cluster-master2] 🕒 Awaiting cloud config (may take a minute...)
+[Instance rust-example-cluster-master1] [INFO]  Downloading binary https://github.com/k3s-io/k3s/releases/download/v1.32.0+k3s1/k3s
+[Instance rust-example-cluster-master2] Cloud init finished: 54.91 - Sat, 27 Dec 2025 15:52:09 +0000 - v. 25.1.4-0ubuntu0~24.04.1
+[Instance rust-example-cluster-master1] [INFO]  Verifying binary download
+[Instance rust-example-cluster-master1] [INFO]  Installing k3s to /usr/local/bin/k3s
+[Instance rust-example-cluster-master1] [INFO]  Skipping installation of SELinux RPM
+[Instance rust-example-cluster-master1] [INFO]  Creating /usr/local/bin/kubectl symlink to k3s
+[Instance rust-example-cluster-master1] [INFO]  Creating /usr/local/bin/crictl symlink to k3s
+[Instance rust-example-cluster-master1] [INFO]  Creating /usr/local/bin/ctr symlink to k3s
+[Instance rust-example-cluster-master1] [INFO]  Creating killall script /usr/local/bin/k3s-killall.sh
+[Instance rust-example-cluster-master1] [INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh
+[Instance rust-example-cluster-master1] [INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env
+[Instance rust-example-cluster-master1] [INFO]  systemd: Creating service file /etc/systemd/system/k3s.service
+[Instance rust-example-cluster-master1] [INFO]  systemd: Enabling k3s unit
+[Instance rust-example-cluster-master1] Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc/systemd/system/k3s.service.
+[Instance rust-example-cluster-master2] Private network interface enp7s0 found
+[Instance rust-example-cluster-master2] Private network IP: 10.0.0.4
+[Instance rust-example-cluster-master2] Installing k3s...
+[Instance rust-example-cluster-master2] [INFO]  Using v1.32.0+k3s1 as release
+[Instance rust-example-cluster-master2] [INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.32.0+k3s1/sha256sum-amd64.txt
+[Instance rust-example-cluster-master2] [INFO]  Downloading binary https://github.com/k3s-io/k3s/releases/download/v1.32.0+k3s1/k3s
+[Instance rust-example-cluster-master1] [INFO]  systemd: Starting k3s
+[Instance rust-example-cluster-master2] [INFO]  Verifying binary download
+[Instance rust-example-cluster-master2] [INFO]  Installing k3s to /usr/local/bin/k3s
+[Instance rust-example-cluster-master2] [INFO]  Skipping installation of SELinux RPM
+[Instance rust-example-cluster-master2] [INFO]  Creating /usr/local/bin/kubectl symlink to k3s
+[Instance rust-example-cluster-master2] [INFO]  Creating /usr/local/bin/crictl symlink to k3s
+[Instance rust-example-cluster-master2] [INFO]  Creating /usr/local/bin/ctr symlink to k3s
+[Instance rust-example-cluster-master2] [INFO]  Creating killall script /usr/local/bin/k3s-killall.sh
+[Instance rust-example-cluster-master2] [INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh
+[Instance rust-example-cluster-master2] [INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env
+[Instance rust-example-cluster-master2] [INFO]  systemd: Creating service file /etc/systemd/system/k3s.service
+[Instance rust-example-cluster-master2] [INFO]  systemd: Enabling k3s unit
+[Instance rust-example-cluster-master2] Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc/systemd/system/k3s.service.
+[Instance rust-example-cluster-master2] [INFO]  systemd: Starting k3s
+[Instance rust-example-cluster-master1] k3s installation completed successfully
+[Instance rust-example-cluster-master2] k3s installation completed successfully
+[Hetzner Cloud Secret] Creating secret for Hetzner Cloud token...
+[Hetzner Cloud Secret] secret/hcloud created
+[Hetzner Cloud Secret] ...secret created
+[Hetzner Cloud Controller Manager] Installing Hetzner Cloud Controller Manager...
+[Hetzner Cloud Controller Manager] serviceaccount/hcloud-cloud-controller-manager created
+[Hetzner Cloud Controller Manager] clusterrole.rbac.authorization.k8s.io/system:hcloud-cloud-controller-manager created
+[Hetzner Cloud Controller Manager] clusterrolebinding.rbac.authorization.k8s.io/system:hcloud-cloud-controller-manager:restricted created
+[Hetzner Cloud Controller Manager] deployment.apps/hcloud-cloud-controller-manager created
+[Hetzner Cloud Controller Manager] Hetzner Cloud Controller Manager installed
+[Hetzner CSI Driver] Installing Hetzner CSI Driver...
+[Hetzner CSI Driver] serviceaccount/hcloud-csi-controller created
+[Hetzner CSI Driver] storageclass.storage.k8s.io/hcloud-volumes created
+[Hetzner CSI Driver] clusterrole.rbac.authorization.k8s.io/hcloud-csi-controller created
+[Hetzner CSI Driver] clusterrolebinding.rbac.authorization.k8s.io/hcloud-csi-controller created
+[Hetzner CSI Driver] service/hcloud-csi-controller-metrics created
+[Hetzner CSI Driver] service/hcloud-csi-node-metrics created
+[Hetzner CSI Driver] daemonset.apps/hcloud-csi-node created
+[Hetzner CSI Driver] deployment.apps/hcloud-csi-controller created
+[Hetzner CSI Driver] csidriver.storage.k8s.io/csi.hetzner.cloud created
+[Hetzner CSI Driver] ...Hetzner CSI Driver installed
+[System Upgrade Controller] Installing System Upgrade Controller...
+[System Upgrade Controller] namespace/system-upgrade created
+[System Upgrade Controller] customresourcedefinition.apiextensions.k8s.io/plans.upgrade.cattle.io created
+[System Upgrade Controller] namespace/system-upgrade configured
+[System Upgrade Controller] serviceaccount/system-upgrade created
+[System Upgrade Controller] role.rbac.authorization.k8s.io/system-upgrade-controller created
+[System Upgrade Controller] clusterrole.rbac.authorization.k8s.io/system-upgrade-controller created
+[System Upgrade Controller] clusterrole.rbac.authorization.k8s.io/system-upgrade-controller-drainer created
+[System Upgrade Controller] rolebinding.rbac.authorization.k8s.io/system-upgrade created
+[System Upgrade Controller] clusterrolebinding.rbac.authorization.k8s.io/system-upgrade created
+[System Upgrade Controller] clusterrolebinding.rbac.authorization.k8s.io/system-upgrade-drainer created
+[System Upgrade Controller] configmap/default-controller-env created
+[System Upgrade Controller] deployment.apps/system-upgrade-controller created
+[System Upgrade Controller] ...System Upgrade Controller installed
+[Cluster Autoscaler] Installing Cluster Autoscaler...
+[Cluster Autoscaler] Added volumeattachments permission to cluster autoscaler ClusterRole
+[Cluster Autoscaler] serviceaccount/cluster-autoscaler created
+[Cluster Autoscaler] clusterrole.rbac.authorization.k8s.io/cluster-autoscaler created
+[Cluster Autoscaler] role.rbac.authorization.k8s.io/cluster-autoscaler created
+[Cluster Autoscaler] clusterrolebinding.rbac.authorization.k8s.io/cluster-autoscaler created
+[Cluster Autoscaler] rolebinding.rbac.authorization.k8s.io/cluster-autoscaler created
+[Cluster Autoscaler] deployment.apps/cluster-autoscaler created
+[Cluster Autoscaler] ...Cluster Autoscaler installed
+[Control plane] Switched to context "rust-example-cluster-master3".
+
+[33mWARNING!!! The cluster is not protected against deletion. If you want to protect the cluster against deletion, set `protect_against_deletion: true` in the configuration file.[0m
+

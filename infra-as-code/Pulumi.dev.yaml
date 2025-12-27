@@ -1,0 +1,5 @@
+config:
+  rust-example-app:cloudnativePgSkipCrds: "true"
+  rust-example-app:cloudnativePgAdoptExisting: "true"
+  hcloud:token:
+    secure: AAABAIJPR87sedQl6L2zDP5+jlG+95KVswqp69xBjuwoQ5p1ZrWutDhPlxNZfD3rf38iieOAfA/jfByll1s2i7EED+7Y/W6jLR/L08eXOJL51QrXcMCQR2u3D3QccP0W

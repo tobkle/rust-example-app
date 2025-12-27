@@ -1,2 +1,5 @@
 /bin/
 /node_modules/
+hetzner-k3s.yaml
+cluster-config.yaml
+kubeconfig
