@@ -224,7 +224,9 @@ RUN curl -fsSL https://get.pulumi.com | sudo -E bash - \
 # Compile here as it requires musl.
 RUN cargo binstall --no-confirm cornucopia
 
-RUN if [ "$TARGETARCH" != "arm64" ]; then \
-        cargo binstall --no-confirm clorinde; \
-        cargo binstall --no-confirm wasm-bindgen-cli; \
-    fi
+RUN cargo binstall --no-confirm clorinde; \
+    cargo binstall --no-confirm wasm-bindgen-cli; 
+#if [ "$TARGETARCH" != "arm64" ]; then \
+#        cargo binstall --no-confirm clorinde; \
+#        cargo binstall --no-confirm wasm-bindgen-cli; \
+#    fi

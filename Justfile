@@ -1,10 +1,19 @@
+# Build and push the development container image for multiple architectures.
+dev-container:
+    cd dev-env-as-code
+    docker buildx create --use
+    docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/tobkle/toby-dev-env:latest --push .
+    cd ..
+
+# Initialize a local k3d Kubernetes cluster for development within Docker.
 dev-init:
     k3d cluster delete k3d-nails
     k3d cluster create k3d-nails --agents 1 -p "30000-30001:30000-30001@agent:0"
     just get-config
 
-# wait 10 seconds for the cluster to be ready, before starting dev-setup
+# Set up the development environment inside the k3d cluster using https://stack-cli.com
 dev-setup:
+    sleep 10
     stack init
     stack install --manifest stack.dev.yaml
 
@@ -35,12 +44,6 @@ asset-pipeline:
 
 asset-pipeline-watch:
     cd /workspace/crates/asset-pipeline && npm run start
-
-run-docker-build:
-    cd dev-env-as-code &&  \
-    docker build --build-arg TARGETARCH=arm64 --build-arg BUILDPLATFORM=linux/arm64 -t tobkle/toby-dev-env:latest -f Dockerfile .  && \
-    docker push tobkle/toby-dev-env:latest  &&\
-    cd ..
 
 run-earthly:
     printf '%s\n' 'IMAGE_PREFIX=ghcr.io/tobkle' 'RUST_TARGET=aarch64-unknown-linux-musl' 'DBMATE_ARCH=arm64' > /tmp/earthly.arg
